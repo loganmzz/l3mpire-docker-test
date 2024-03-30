@@ -39,6 +39,8 @@ lempire devops team.
 
 ```mermaid
 flowchart LR
+    any((*))
+
     subgraph workstation
         workstation.ssh["ssh"]
         workstation.traefik["traefik"]
@@ -47,10 +49,19 @@ flowchart LR
     subgraph server [logan.test.lem.ovh]
         server.sshd["sshd"]
         server.traefik["traefik"]
+        server.jenkins["jenkins"]
+        server.nodeapp["node-app"]
     end
 
     workstation.ssh --> server.sshd
+
     workstation.traefik -- "*.l3mpire.localhost" --> server.traefik
+    server.traefik -- "traefik.l3mpire.localhost" --> server.traefik
+    server.traefik -- "jenkins.l3mpire.localhost" --> server.jenkins
+    linkStyle 1,2,3 stroke:red;
+
+    any -- "logan.test.lem.ovh" --> server.traefik -- "logan.test.lem.ovh" --> server.nodeapp
+    linkStyle 4,5 stroke:blue;
 ```
 
 ## Access path / Services
@@ -63,6 +74,9 @@ flowchart LR
     * UI:
       * URL: `http://jenkins.l3mpire.localhost`
       * Credentials: `admin` / (provided password)
+* `node-app`
+    * API:
+      * URL: `http://logan.test.lem.ovh`
 
 # Implementation
 
@@ -102,3 +116,7 @@ jenkins-official.test.lem.ovh.  CNAME   jenkins.logan.test.lem.ovh.
 * Jenkins master should avoid handling jobs. But secondary agents can be deployed as container.
 
 * Jenkins pipeline should limit their responsabilities to environment setup (envrionment variables, configuration files, docker image, ...) and delegates to scripts/tools. So, actions can be run easily run outside of Jenkins (developer workstation, another CI/CD, ...).
+
+* `node-app` publish and deployment has no release/versioning management
+
+* `node-app` deployment has no "working" area (only a transient one for pipeline duration)

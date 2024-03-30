@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
 
     options {
         //FIXME Disabled for test purpose
@@ -21,12 +21,32 @@ pipeline {
             agent {
                 docker {
                     image 'node:20.12.0'
+                    reuseNode true
                 }
             }
 
             steps {
                 dir('applications/node-app') {
                     sh 'npm ci'
+                    sh 'npm run lint'
+                }
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                dir('applications/node-app') {
+                    script {
+                        docker.build('logan.test.lem.ovh/node-app')
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('applications/node-app/docker-compose') {
+                    sh 'docker compose --project-name node-app-default up --force-recreate --remove-orphans --detach'
                 }
             }
         }

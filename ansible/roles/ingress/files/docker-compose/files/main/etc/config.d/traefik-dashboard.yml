@@ -1,0 +1,15 @@
+http:
+  routers:
+    api:
+      rule: Host(`traefik.l3mpire.localhost`)
+      entryPoints:
+      - http
+      service: api@internal
+      middlewares:
+      - api-auth
+
+  middlewares:
+    api-auth:
+      basicAuth:
+        users:
+        - "admin:$2y$05$dMiSpRL4uspCRG2/KqhmmuQZWDgshU2J9.K1h8c51T1eyNmf8jAyq"

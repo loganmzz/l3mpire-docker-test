@@ -1,0 +1,21 @@
+---
+- name: "[{{ docker_compose_stack_name }}] Create project directory"
+  ansible.builtin.file:
+    path: "{{ docker_compose_stack_dir_project }}"
+    state: directory
+
+- name: "[{{ docker_compose_stack_name }}] Create data directory"
+  ansible.builtin.file:
+    path: "{{ docker_compose_stack_dir_data }}"
+    state: directory
+
+- name: "[{{ docker_compose_stack_name }}] Copy files"
+  ansible.builtin.copy:
+    src: "{{ docker_compose_stack_src }}/"
+    dest: "{{ docker_compose_stack_dir_project }}/"
+  register: docker_compose_stack_copy
+
+- name: "[{{ docker_compose_stack_name }}] Up services"
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_compose_stack_dir_project }}"
+    recreate: "{{ docker_compose_stack_copy is changed | ansible.builtin.ternary('always', 'auto') }}"

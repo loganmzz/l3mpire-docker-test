@@ -2,3 +2,4 @@ ungrouped:
   hosts:
     logan.test.lem.ovh:
       ansible_user: pikachu
+      docker_compose_stack_basedir: /opt/svc/docker-compose

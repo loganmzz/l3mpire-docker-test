@@ -1,0 +1,2 @@
+docker_compose_stack_dir_project: "{{ docker_compose_stack_basedir }}/projects/{{ docker_compose_stack_name }}"
+docker_compose_stack_dir_data: "{{ docker_compose_stack_basedir }}/data/{{ docker_compose_stack_name }}"

@@ -1,0 +1,15 @@
+---
+log:
+  level: INFO
+
+providers:
+  file:
+    directory: /etc/traefik/config.d
+
+  docker:
+    exposedByDefault: false
+    network: traefik_default
+
+api:
+  insecure: true
+  dashboard: true

@@ -1,1 +1,6 @@
 ---
+- name: Configure target server(s)
+  hosts: all
+  become: true
+  roles:
+  - ingress

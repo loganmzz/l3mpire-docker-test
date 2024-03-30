@@ -1,0 +1,11 @@
+---
+- name: Resolve Docker compose files
+  set_fact:
+    ingress_docker_compose_files: "{{ role_path }}/files/docker-compose"
+
+- name: Deploy Docker compose stack
+  ansible.builtin.include_role:
+    name: docker-compose-stack
+  vars:
+    docker_compose_stack_name: traefik
+    docker_compose_stack_src: "{{ ingress_docker_compose_files }}"

@@ -1,5 +1,7 @@
 # docker-test
 
+# Goal
+
 abstract: Provide lempire DEVOPS exercices
 intent:
 
@@ -23,3 +25,24 @@ Provide your solution as a PR.
 
 --
 lempire devops team.
+
+# Design
+
+1. Architecture is based on a single VM hosting [Docker](https://www.docker.com/) containers.
+1. Applications & Services are deployed as [Docker Compose](https://docs.docker.com/compose/) stacks.
+1. An Ingress exposes HTTP services on-demand.
+1. Support services (Ingress, CI/CD, etc.) are deployed with Ansible.
+
+# Architecture
+
+```mermaid
+flowchart LR
+    subgraph workstation
+    end
+
+    workstation --> server.sshd
+
+    subgraph server [logan.test.lem.ovh]
+        server.sshd["sshd"]
+    end
+```

@@ -1,0 +1,22 @@
+---
+services:
+  jenkins:
+    image: jenkins/jenkins:2.451
+    restart: on-failure
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - default
+      - ingress
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.jenkins.rule=Host(`jenkins.l3mpire.localhost`)
+
+volumes:
+  jenkins_home:
+
+networks:
+  default:
+  ingress:
+    external: true
+    name: traefik_default

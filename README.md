@@ -59,6 +59,10 @@ flowchart LR
     * API/Dashboard:
       * URL: `http://traefik.l3mpire.localhost`
       * Credentials: `admin` / (provided password)
+* Jenkins
+    * UI:
+      * URL: `http://jenkins.l3mpire.localhost`
+      * Credentials: `admin` / (provided password)
 
 # Implementation
 
@@ -80,3 +84,7 @@ Match host "logan.test.lem.ovh" user "pikachu"
 ansible-galaxy role install -r requirements.yml &&
 ansible-galaxy collection install -r requirements.yml
 ```
+
+# Limitations
+
+* Jenkins is deployed automatically but manually setup (plugins, credentials, jobs, ...) but can be automated with: [Groovy scripts](https://www.jenkins.io/doc/book/managing/groovy-hook-scripts/), [Jenkins Configuration as Code](https://plugins.jenkins.io/configuration-as-code/), [seed job](https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/docs/seed-jobs.md), [Github Branch Source](https://plugins.jenkins.io/github-branch-source/), ...

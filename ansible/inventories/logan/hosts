@@ -1,0 +1,4 @@
+ungrouped:
+  hosts:
+    logan.test.lem.ovh:
+      ansible_user: pikachu

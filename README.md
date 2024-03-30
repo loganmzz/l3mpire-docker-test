@@ -46,3 +46,16 @@ flowchart LR
         server.sshd["sshd"]
     end
 ```
+# Implementation
+
+## Ansible
+
+### Prerequisites
+
+1. Add public SSH key to `pikachu@logan.test.lem.ovh:.ssh/authorized_keys`
+1. Setup SSH configuration in `~/.ssh/config`:
+
+```
+Match host "logan.test.lem.ovh" user "pikachu"
+	IdentityFile ~/.ssh/keys/pikachu__logan.test.lem.ovh
+```

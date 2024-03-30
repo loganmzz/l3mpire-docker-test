@@ -87,4 +87,18 @@ ansible-galaxy collection install -r requirements.yml
 
 # Limitations
 
+* Ingress only exposes `node-app` default instance on public address but can be improved by creating wildcard DNS and use CNAME for shorter/more specific DNS name for apps. Example:
+
+```text
+# Pseudo DNS Record
+*.logan.test.lem.ovh.           CNAME   .logan.test.lem.ovh.
+jenkins-official.test.lem.ovh.  CNAME   jenkins.logan.test.lem.ovh.
+```
+
 * Jenkins is deployed automatically but manually setup (plugins, credentials, jobs, ...) but can be automated with: [Groovy scripts](https://www.jenkins.io/doc/book/managing/groovy-hook-scripts/), [Jenkins Configuration as Code](https://plugins.jenkins.io/configuration-as-code/), [seed job](https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/docs/seed-jobs.md), [Github Branch Source](https://plugins.jenkins.io/github-branch-source/), ...
+
+* Jenkins builds Docker image into host Docker engine, so they are accessible for application hosting. But should be replaced by Docker registry: [Docker Hub](https://hub.docker.com/), [Harbor](https://goharbor.io/), [Artifactory](https://jfrog.com/artifactory/), ...
+
+* Jenkins master should avoid handling jobs. But secondary agents can be deployed as container.
+
+* Jenkins pipeline should limit their responsabilities to environment setup (envrionment variables, configuration files, docker image, ...) and delegates to scripts/tools. So, actions can be run easily run outside of Jenkins (developer workstation, another CI/CD, ...).

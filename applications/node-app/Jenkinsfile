@@ -1,0 +1,34 @@
+pipeline {
+    agent none
+
+    options {
+        //FIXME Disabled for test purpose
+        // buildDiscarder(
+        //     logRotator(
+        //         daysToKeepStr: '5',
+        //         numToKeepStr: '10',
+        //     )
+        // )
+
+        disableConcurrentBuilds()
+        timeout(time: 10, unit: 'MINUTES')
+        timestamps()
+        disableRestartFromStage()
+    }
+
+    stages {
+        stage('Build') {
+            agent {
+                docker {
+                    image 'node:20.12.0'
+                }
+            }
+
+            steps {
+                dir('applications/node-app') {
+                    sh 'npm ci'
+                }
+            }
+        }
+    }
+}

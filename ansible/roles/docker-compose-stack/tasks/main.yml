@@ -19,3 +19,4 @@
   community.docker.docker_compose_v2:
     project_src: "{{ docker_compose_stack_dir_project }}"
     recreate: "{{ docker_compose_stack_copy is changed | ansible.builtin.ternary('always', 'auto') }}"
+    build: "{{ docker_compose_stack_copy is changed | ansible.builtin.ternary('always', 'policy') }}"
